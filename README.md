@@ -1,4 +1,4 @@
-# Sistema de cobranças - API RESTfull (front-end)
+# Sistema de cobranças - API RESTfull (back-end)
 
 ## Este repositório possui a api do sistema para registro de clientes e suas cobranças e o gerenciamento da relação entre essas entidades com acesso de múltiplos usuários com permissão de visualização e alteração dos mesmos dados do banco de dados.
 ---
