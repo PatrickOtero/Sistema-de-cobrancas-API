@@ -5,8 +5,6 @@
 
  ### Links para repositórios de outras stacks e para o deploy da aplicação:
 
-**Repositório de Backend**: https://github.com/PatrickOtero/Sistema-de-cobrancas-API
-
 **Repositório de Frontend**: https://github.com/PatrickOtero/Sistema-de-cobrancas-web-app
 
 **URL da aplicação funcionando**: https://sistema-de-cobrancas.netlify.app/
