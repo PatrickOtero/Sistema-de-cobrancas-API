@@ -162,6 +162,7 @@ const deleteCharges = async (req, res) => {
     if (!chargeExists) return res.status(404).json('A cobrança não existe!');
 
     if (chargeExists.status == "Paga") return res.status(401).json("Cobranças pagas não podem ser excluídas");
+    if (chargeExists.duedate < new Date()) return res.status(401).json("Cobranças vencidas não podem ser excluídas");
 
     const chargeToRemove = await knex('charges').where('id', idParam).del()
 
