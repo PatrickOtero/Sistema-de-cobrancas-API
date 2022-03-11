@@ -132,6 +132,7 @@ const summarizeCharges = async (req, res) => {
 
 const editCharges = async (req, res) => {
   const { idParam } = req.params
+  const { name_customer, description, status, value, duedate } = req.body
 
   try {
     await schemaEditCharge.validate(req.body);
@@ -140,8 +141,12 @@ const editCharges = async (req, res) => {
 
     if (!chargeExists) return res.status(404).json('A cobrança não existe!')
 
+    const splitedDate = duedate.split('-')
+    const rightOrderDate = splitedDate[2] + splitedDate[1] + splitedDate[0]
+
     const tableChargesUpdate = await knex('charges')
-      .update({...req.body})
+      .update({name_customer, description,
+         status, value, duedate: rightOrderDate})
       .where('id', idParam)
 
     if (tableChargesUpdate.length) {
