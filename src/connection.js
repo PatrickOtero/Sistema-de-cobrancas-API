@@ -1,5 +1,5 @@
-const knex = require('knex')({
-  client: 'pg',
+const knex = require("knex")({
+  client: "pg",
   connection: {
     user: process.env.DB_USER || process.env.DB_LOCAL_USER,
     port: 5432,
@@ -8,6 +8,6 @@ const knex = require('knex')({
     password: process.env.DB_PASSWORD || process.env.DB_LOCAL_PASSWORD,
     ssl: { rejectUnauthorized: false },
   },
-})
+});
 
-module.exports = knex
+module.exports = knex;
