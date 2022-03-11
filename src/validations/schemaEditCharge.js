@@ -13,7 +13,7 @@ const schemaEditCharge = yup.object().shape({
         .number()
         .required('O valor é obrigatório! Preencha-o, por favor.'),
     duedate: yup
-        .date("A data está em formato inválido")
+        .string()
         .required('O vencimento é obrigatório! Preencha-o, por favor.'),
 });
 
