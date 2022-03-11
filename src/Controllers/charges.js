@@ -157,7 +157,7 @@ const deleteCharges = async (req, res) => {
   const { idParam } = req.params
 
   try {
-    const chargeExists = await knex('charges').select("customerid", "status").where('id', idParam).first();
+    const chargeExists = await knex('charges').select("customerid", "status", "duedate").where('id', idParam).first();
 
     if (!chargeExists) return res.status(404).json('A cobrança não existe!');
 
