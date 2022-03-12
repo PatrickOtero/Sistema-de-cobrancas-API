@@ -33,7 +33,6 @@ const yupErrorsObtainer = (err, object) => {
 }
 
 module.exports = {
-    upToDateCustomerValidator,
     yupErrorsObtainer,
     customerStatusValidator,
 }
