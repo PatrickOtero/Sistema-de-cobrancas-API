@@ -1,23 +1,17 @@
 const knex = require("../connection");
 
 const customerStatusValidator = async (customersArray, chargesArray) => {
-    for (customer of customersArray) {
-        const statusDefault = 'Em dia'
-    
+    for (customer of customersArray) {    
         await knex('customers')
-          .update({ status: statusDefault })
+          .update({ status: "Em dia" })
           .where('id', customer.id)
       }
     
-      if (chargesArray.length) {
+      if (chargesArray.length > 0) {
         for (charge of chargesArray) {
-          await knex('customers').where('id', charge.customerid)
-    
-          if (charge.duedate < new Date()) {
-            const statusDebtor = 'Inadimplente'
-    
+          if (charge.duedate < new Date() && charge.status !== "Paga") {
             await knex('customers')
-              .update({ status: statusDebtor })
+              .update({ status: 'Inadimplente' })
               .where('id', charge.customerid)
           }
         }

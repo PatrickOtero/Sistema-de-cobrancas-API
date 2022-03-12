@@ -20,7 +20,7 @@ const listAllCustomers = async (req, res) => {
     "status"
   );
 
-  const tableCharges = await knex('charges').select('customerid', 'duedate')
+  const tableCharges = await knex('charges').select('customerid', 'duedate', "status")
 
   customerStatusValidator(allCustomersList, tableCharges)
 
