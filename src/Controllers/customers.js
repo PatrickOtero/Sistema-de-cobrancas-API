@@ -7,6 +7,7 @@ const {
   dateFormatter,
   arrayPropertyValueFormatter,
 } = require("../Helpers/formatters");
+const { customerStatusValidator } = require("../Helpers/validators")
 const { searchInCustomer } = require("../Controllers/search");
 
 const listAllCustomers = async (req, res) => {
@@ -18,6 +19,10 @@ const listAllCustomers = async (req, res) => {
     "cpf",
     "status"
   );
+
+  const tableCharges = await knex('charges').select('customerid', 'duedate')
+
+  customerStatusValidator(allCustomersList, tableCharges)
 
   const orderedList = allCustomersList.sort((a, b) => a < b);
 

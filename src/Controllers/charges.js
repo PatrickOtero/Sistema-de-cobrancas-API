@@ -7,7 +7,6 @@ const {
   chargesSummaryTotalValueObtainerAndFormatter,
 } = require('../Helpers/formatters')
 
-const { upToDateCustomerValidator } = require("../Helpers/validators")
 const { searchInCharges } = require("../Controllers/search");
 
 const registerCharge = async (req, res) => {
@@ -170,10 +169,6 @@ const deleteCharges = async (req, res) => {
     if (chargeExists.duedate < new Date()) return res.status(401).json("Cobranças vencidas não podem ser excluídas");
 
     const chargeToRemove = await knex('charges').where('id', idParam).del()
-
-    const dueDates = await knex("charges").select("duedate").where("customerid", chargeExists.customerid);
-
-    upToDateCustomerValidator(chargeExists, dueDates);
 
     if (chargeToRemove.length) {
       res.status(400).json('A cobrança não foi excluída.')

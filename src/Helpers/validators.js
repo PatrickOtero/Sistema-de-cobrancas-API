@@ -1,15 +1,26 @@
 const knex = require("../connection");
 
-const upToDateCustomerValidator = async (array1, array) => {
-    let customerOk = true;
-    for (date of array) {
-        if (date.duedate < new Date())
-            customerOk = false;
-    }
-    if (customerOk) {
-        await knex("customers")
-            .update({ status: "Em dia" })
-            .where("id", array1.customerid);
+const customerStatusValidator = (customersArray, chargesArray) => {
+    for (customer of customersArray) {
+        const statusDefault = 'Em dia'
+    
+        await knex('customers')
+          .update({ status: statusDefault })
+          .where('id', customer.id)
+      }
+    
+      if (chargesArray.length) {
+        for (charge of chargesArray) {
+          await knex('customers').where('id', charge.customerid)
+    
+          if (charge.duedate < new Date()) {
+            const statusDebtor = 'Inadimplente'
+    
+            await knex('customers')
+              .update({ status: statusDebtor })
+              .where('id', charge.customerid)
+          }
+        }
     }
 }
 
@@ -21,29 +32,8 @@ const yupErrorsObtainer = (err, object) => {
     if (secondError) object.requiredEmail = secondError
 }
 
-// BIBLIOTECA CRON 
-
-const defaulterCustomerValidator = async () => {
-    const chargesList = await knex("charges").select("customerid", "duedate", "status");
-    try {
-        if (chargesList.length > 0) {
-            for (charge of chargesList) {
-                if (charge.duedate < new Date() && charge.status != "Paga") {
-                    await knex('customers').where('id', charge.customerid)
-
-                    await knex('customers')
-                        .update({ status: "Inadimplente" })
-                        .where('id', charge.customerid)
-                }
-            }
-        }
-    } catch (erro) {
-        console.log(erro);
-    }
-}
-
 module.exports = {
     upToDateCustomerValidator,
-    defaulterCustomerValidator,
-    yupErrorsObtainer
+    yupErrorsObtainer,
+    customerStatusValidator,
 }
