@@ -1,6 +1,6 @@
 const knex = require("../connection");
 
-const customerStatusValidator = (customersArray, chargesArray) => {
+const customerStatusValidator = async (customersArray, chargesArray) => {
     for (customer of customersArray) {
         const statusDefault = 'Em dia'
     
